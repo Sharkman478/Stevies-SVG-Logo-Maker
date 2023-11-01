@@ -1,18 +1,18 @@
 const inquirer = require('inquirer');
+const generateSvg = require('./lib/shapes.js');
 const fs = require('fs');
-const shapes = require('./lib/shapes');
 const questions = [
     {
         type: 'list',
-        name: 'color',
+        name: 'shapeColor',
         message: 'Enter color for the logo:',
-        choices: ['Blue', 'Red', 'Green'],
+        choices: ['blue', 'red', 'green'],
       },
       {
         type: 'list',
         name: 'shape',
         message: 'Enter shape for the logo:',
-        choices: ['Triangle', 'Circle', 'Square'],
+        choices: ['triangle', 'circle', 'square'],
       },
       {
         type: 'input',
@@ -20,8 +20,8 @@ const questions = [
         message: 'Enter text for the logo (maximum of 3 characters):',
       },
       {
-        type: 'list',
-        name: 'text-color',
+        type: 'input',
+        name: 'textColor',
         message: 'Enter text color for the logo (name of color or hexadecimal):',
       }
 ];
@@ -38,7 +38,7 @@ function init() {
     inquirer
       .prompt (questions)
       .then ((answers) => {
-        writeToFile('./dist/logo.svg', shapes(answers));
+        writeToFile('./dist/logo.svg', generateSvg(answers));
       })
       .catch((error) => {
         if (error.isTtyError) {
